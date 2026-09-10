@@ -8,8 +8,10 @@ claim, so this check runs in CI. `pytest` is allowed, but only inside tests/.
 from __future__ import annotations
 
 import ast
+import importlib.util
 import os
 import sys
+import sysconfig
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ALLOWED_EXTRA = {"pytest", "llmkit", "projects", "scripts", "conftest"}
@@ -20,20 +22,33 @@ ALLOWED_EXTRA = {"pytest", "llmkit", "projects", "scripts", "conftest"}
 OPTIONAL_LAZY = {"tiktoken"}
 
 
-def stdlib_names() -> set:
-    names = set(getattr(sys, "stdlib_module_names", ()))
-    if not names:  # Python 3.9 fallback
-        names = set(sys.builtin_module_names) | {
-            "abc", "argparse", "ast", "base64", "collections", "contextlib", "csv",
-            "dataclasses", "datetime", "difflib", "enum", "functools", "hashlib",
-            "heapq", "hmac", "html", "http", "io", "itertools", "json", "logging",
-            "math", "os", "pathlib", "queue", "random", "re", "secrets", "select",
-            "shutil", "signal", "socket", "socketserver", "sqlite3", "statistics",
-            "string", "subprocess", "sys", "tempfile", "textwrap", "threading",
-            "time", "traceback", "types", "typing", "unicodedata", "urllib", "uuid",
-            "warnings", "zlib",
-        }
-    return names
+def _is_stdlib(mod: str) -> bool:
+    """True if `mod` ships with Python.
+
+    `sys.stdlib_module_names` exists from 3.10. On 3.9 we fall back to resolving
+    the module and checking where it lives: anything under the interpreter's own
+    stdlib directory is standard library, anything under site-packages is not.
+    Resolving beats hard-coding a list, which is what made the first version of
+    this check fail CI on 3.9 by not knowing about `__future__`.
+    """
+    if mod in ("__future__", "__main__"):
+        return True
+    if mod in sys.builtin_module_names:
+        return True
+    names = getattr(sys, "stdlib_module_names", None)
+    if names is not None:
+        return mod in names
+    try:  # Python 3.9
+        spec = importlib.util.find_spec(mod)
+    except (ImportError, ValueError):
+        return False
+    if spec is None:
+        return False
+    origin = spec.origin or ""
+    if origin in ("built-in", "frozen"):
+        return True
+    stdlib_dir = sysconfig.get_paths().get("stdlib", "")
+    return bool(stdlib_dir) and origin.startswith(stdlib_dir) and "site-packages" not in origin
 
 
 def collect_imports(path: str):
@@ -63,8 +78,11 @@ def collect_imports(path: str):
 
 
 def main() -> int:
-    allowed = stdlib_names() | ALLOWED_EXTRA
     violations = []
+
+    def allowed(mod: str) -> bool:
+        return mod in ALLOWED_EXTRA or _is_stdlib(mod)
+
     for base in ("llmkit", "projects", "scripts"):
         for dirpath, dirnames, filenames in os.walk(os.path.join(ROOT, base)):
             dirnames[:] = [d for d in dirnames if d != "__pycache__"]
@@ -76,13 +94,13 @@ def main() -> int:
                 rel = os.path.relpath(path, ROOT)
                 hard, lazy = collect_imports(path)
                 for mod in sorted(hard):
-                    if mod in allowed:
+                    if allowed(mod):
                         if mod == "pytest" and not in_tests:
                             violations.append((rel, "pytest outside tests/"))
                         continue
                     violations.append((rel, mod))
                 for mod in sorted(lazy):
-                    if mod in allowed or mod in OPTIONAL_LAZY:
+                    if mod in OPTIONAL_LAZY or allowed(mod):
                         continue
                     violations.append((rel, f"{mod} (lazy import, still third-party)"))
 
