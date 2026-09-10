@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "bootstrap_seed": 20260910,
+    "cases": 23,
+    "confidence": 0.95,
+    "errors": 0,
+    "judge_policy": "never",
+    "total_latency_ms": 119.388
+  },
+  "metrics": {
+    "contains": {
+      "ci_high": 0.9,
+      "ci_low": 0.5,
+      "ci_width": 0.4,
+      "mean": 0.7,
+      "n": 20
+    },
+    "json_schema": {
+      "ci_high": 1.0,
+      "ci_low": 1.0,
+      "ci_width": 0.0,
+      "mean": 1.0,
+      "n": 1
+    },
+    "pass_rate": {
+      "ci_high": 0.8696,
+      "ci_low": 0.5217,
+      "ci_width": 0.3478,
+      "mean": 0.6957,
+      "n": 23
+    },
+    "regex": {
+      "ci_high": 1.0,
+      "ci_low": 1.0,
+      "ci_width": 0.0,
+      "mean": 1.0,
+      "n": 2
+    },
+    "token_f1": {
+      "ci_high": 0.6542,
+      "ci_low": 0.3277,
+      "ci_width": 0.3266,
+      "mean": 0.4941,
+      "n": 16
+    }
+  },
+  "system": "baseline",
+  "version": 1
+}
