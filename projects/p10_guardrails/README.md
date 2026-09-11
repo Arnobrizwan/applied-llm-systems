@@ -1,5 +1,7 @@
 # 10. Guardrails Middleware
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/guardrails](https://applied-llm-systems.vercel.app/s/guardrails)** - the hosted page runs this code and shows the real output.
+
 Input filtering, reversible PII redaction, prompt-injection detection and output
 filtering, composed behind one policy engine that records every decision.
 

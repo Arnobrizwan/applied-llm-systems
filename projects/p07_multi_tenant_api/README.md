@@ -1,5 +1,7 @@
 # 07. Multi-Tenant LLM API
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/multi-tenant-api](https://applied-llm-systems.vercel.app/s/multi-tenant-api)** - the hosted page runs this code and shows the real output.
+
 A real HTTP gateway that puts per-tenant keys, rate limits, token budgets and hard
 data isolation in front of an LLM, and can produce a billing report afterwards.
 

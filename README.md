@@ -8,6 +8,10 @@ observability, tool calling, and an agent that repairs its own retrieval.
 **Every one of them runs offline, on a stock Python install, with no API key and
 no paid service.** That is a hard constraint, and CI enforces it.
 
+**All fifteen are hosted and interactive: [applied-llm-systems.vercel.app](https://applied-llm-systems.vercel.app).**
+Each page runs this repository's real code on request and shows the actual
+output. Nothing there is pre-recorded.
+
 ```bash
 git clone https://github.com/Arnobrizwan/applied-llm-systems
 cd applied-llm-systems
@@ -24,23 +28,23 @@ No `pip install openai`. No `.env`. No network call. If that stops being true,
 
 ## The fifteen
 
-| # | System | What it proves | Headline measurement |
-|---|---|---|---|
-| 01 | [Production RAG Pipeline](projects/p01_rag_pipeline) | Ingest, chunk, hybrid search, rerank, cite | Reranking lifted recall@1 from **0.67 to 0.93** and MRR from 0.756 to **0.967**; every citation emitted resolved to a real chunk |
-| 02 | [Structured Output Engine](projects/p02_structured_output) | Schema enforcement, repair, retry, fallback | With **100% of responses deliberately corrupted**, success went from 50% at one attempt to **88% at three**; local repair fixed half of it without a second model call |
-| 03 | [Context Assembly Service](projects/p03_context_assembly) | Token budgeting across memory, docs, tools | Naive concatenation overran an 800-token window by **426 tokens**; the assembler landed 508 against a 550 budget with **0 overflows** and kept **100% of high-priority sources vs 77%** |
-| 04 | [LLM Evaluation Harness](projects/p04_eval_harness) | Golden set, judges, bootstrap CI, CI gate | Gate **passes a -0.087 drop and fails a -0.522 one**; 16 of 23 cases settled by free deterministic checks; pairwise judging showed **78.3% position bias**, so those verdicts are recorded as ties |
-| 05 | [Semantic Cache Layer](projects/p05_semantic_cache) | Similarity cache that does not answer the wrong question | The two sets are **not separable by any threshold**; a salience guard removed **all 5 false hits** (precision 0.69 to **1.00**) while losing no real hits. 29.8% tokens saved |
-| 06 | [Model Routing Gateway](projects/p06_model_router) | Complexity routing, budgets, fallback | **55.7% cheaper** than always-large across 44 requests, and **44 of 44 served during a total large-tier outage** |
-| 07 | [Multi-Tenant LLM API](projects/p07_multi_tenant_api) | Keys, rate limits, budgets, isolation | A cross-tenant read returns a **byte-identical 404** to a fictional id, so the API is not an existence oracle. 429 and **402** are distinct outcomes; 21 of 21 log lines carry a request id |
-| 08 | [Fine-Tuning Pipeline](projects/p08_finetuning_pipeline) | LoRA against a prompt-only baseline | LoRA trains **1,048 parameters vs 1,542** for a full fine-tune and matches it at 1.000 accuracy; merging the adapter moved the largest logit by **1.8e-15** |
-| 09 | [Agent Memory System](projects/p09_agent_memory) | Working, episodic and semantic memory | A fact stated at **turn 2 is still recalled at turn 32** inside a 300-token budget; the same-budget no-memory baseline fails the identical question |
-| 10 | [Guardrails Middleware](projects/p10_guardrails) | Injection detection, PII redaction, policy | **140 PII decisions, 0 false positives and 0 false negatives**, including four deliberate lookalikes; **0.08-0.13 ms** of overhead per request |
-| 11 | [Streaming Infrastructure](projects/p11_streaming) | SSE, backpressure, resume, cancellation | TTFT p50 **2.9 ms**; a connection killed mid-stream resumes to **277 contiguous event ids with zero duplicates and no regeneration** |
-| 12 | [Prompt Versioning and A/B](projects/p12_prompt_registry) | Immutable versions, sticky splits, a promotion gate | Assignment was sticky **600 of 600** times across a registry rebuild; the gate **refused to promote at n=40 despite p=0.031** and promoted at n=600 (p=0.00054) |
-| 13 | [LLM Observability Stack](projects/p13_observability) | Traces, cost, anomaly alerting | Cooldown turned **7 alert events into 3 pages**; **0 of 196 spans carried raw prompt text**; 36% of calls were 98% of the bill |
-| 14 | [Tool-Calling Framework](projects/p14_tool_calling) | Typed schemas, discovery, sandboxing | **12 of 12 sandbox escape attempts rejected** (dunder walks, `__import__`, huge exponents) while real arithmetic still works; a 0.2s timeout returned control in **205 ms** |
-| 15 | [Self-Correcting RAG Agent](projects/p15_self_correcting_rag) | Rewrite, critique, escalate, abstain | **16 of 19 answerable questions right vs 13 single-shot**, three gained and none lost, and it abstains on 5 of 8 unanswerable ones instead of inventing an answer |
+| # | System | Try it | What it proves | Headline measurement |
+|---|---|---|---|---|
+| 01 | [Production RAG Pipeline](projects/p01_rag_pipeline) | [run it](https://applied-llm-systems.vercel.app/s/rag-pipeline) | Ingest, chunk, hybrid search, rerank, cite | Reranking lifted recall@1 from **0.67 to 0.93** and MRR from 0.756 to **0.967**; every citation emitted resolved to a real chunk |
+| 02 | [Structured Output Engine](projects/p02_structured_output) | [run it](https://applied-llm-systems.vercel.app/s/structured-output) | Schema enforcement, repair, retry, fallback | With **100% of responses deliberately corrupted**, success went from 50% at one attempt to **88% at three**; local repair fixed half of it without a second model call |
+| 03 | [Context Assembly Service](projects/p03_context_assembly) | [run it](https://applied-llm-systems.vercel.app/s/context-assembly) | Token budgeting across memory, docs, tools | Naive concatenation overran an 800-token window by **426 tokens**; the assembler landed 508 against a 550 budget with **0 overflows** and kept **100% of high-priority sources vs 77%** |
+| 04 | [LLM Evaluation Harness](projects/p04_eval_harness) | [run it](https://applied-llm-systems.vercel.app/s/eval-harness) | Golden set, judges, bootstrap CI, CI gate | Gate **passes a -0.087 drop and fails a -0.522 one**; 16 of 23 cases settled by free deterministic checks; pairwise judging showed **78.3% position bias**, so those verdicts are recorded as ties |
+| 05 | [Semantic Cache Layer](projects/p05_semantic_cache) | [run it](https://applied-llm-systems.vercel.app/s/semantic-cache) | Similarity cache that does not answer the wrong question | The two sets are **not separable by any threshold**; a salience guard removed **all 5 false hits** (precision 0.69 to **1.00**) while losing no real hits. 29.8% tokens saved |
+| 06 | [Model Routing Gateway](projects/p06_model_router) | [run it](https://applied-llm-systems.vercel.app/s/model-router) | Complexity routing, budgets, fallback | **55.7% cheaper** than always-large across 44 requests, and **44 of 44 served during a total large-tier outage** |
+| 07 | [Multi-Tenant LLM API](projects/p07_multi_tenant_api) | [run it](https://applied-llm-systems.vercel.app/s/multi-tenant-api) | Keys, rate limits, budgets, isolation | A cross-tenant read returns a **byte-identical 404** to a fictional id, so the API is not an existence oracle. 429 and **402** are distinct outcomes; 21 of 21 log lines carry a request id |
+| 08 | [Fine-Tuning Pipeline](projects/p08_finetuning_pipeline) | [run it](https://applied-llm-systems.vercel.app/s/finetuning-pipeline) | LoRA against a prompt-only baseline | LoRA trains **1,048 parameters vs 1,542** for a full fine-tune and matches it at 1.000 accuracy; merging the adapter moved the largest logit by **1.8e-15** |
+| 09 | [Agent Memory System](projects/p09_agent_memory) | [run it](https://applied-llm-systems.vercel.app/s/agent-memory) | Working, episodic and semantic memory | A fact stated at **turn 2 is still recalled at turn 32** inside a 300-token budget; the same-budget no-memory baseline fails the identical question |
+| 10 | [Guardrails Middleware](projects/p10_guardrails) | [run it](https://applied-llm-systems.vercel.app/s/guardrails) | Injection detection, PII redaction, policy | **140 PII decisions, 0 false positives and 0 false negatives**, including four deliberate lookalikes; **0.08-0.13 ms** of overhead per request |
+| 11 | [Streaming Infrastructure](projects/p11_streaming) | [run it](https://applied-llm-systems.vercel.app/s/streaming) | SSE, backpressure, resume, cancellation | TTFT p50 **2.9 ms**; a connection killed mid-stream resumes to **277 contiguous event ids with zero duplicates and no regeneration** |
+| 12 | [Prompt Versioning and A/B](projects/p12_prompt_registry) | [run it](https://applied-llm-systems.vercel.app/s/prompt-registry) | Immutable versions, sticky splits, a promotion gate | Assignment was sticky **600 of 600** times across a registry rebuild; the gate **refused to promote at n=40 despite p=0.031** and promoted at n=600 (p=0.00054) |
+| 13 | [LLM Observability Stack](projects/p13_observability) | [run it](https://applied-llm-systems.vercel.app/s/observability) | Traces, cost, anomaly alerting | Cooldown turned **7 alert events into 3 pages**; **0 of 196 spans carried raw prompt text**; 36% of calls were 98% of the bill |
+| 14 | [Tool-Calling Framework](projects/p14_tool_calling) | [run it](https://applied-llm-systems.vercel.app/s/tool-calling) | Typed schemas, discovery, sandboxing | **12 of 12 sandbox escape attempts rejected** (dunder walks, `__import__`, huge exponents) while real arithmetic still works; a 0.2s timeout returned control in **205 ms** |
+| 15 | [Self-Correcting RAG Agent](projects/p15_self_correcting_rag) | [run it](https://applied-llm-systems.vercel.app/s/self-correcting-rag) | Rewrite, critique, escalate, abstain | **16 of 19 answerable questions right vs 13 single-shot**, three gained and none lost, and it abstains on 5 of 8 unanswerable ones instead of inventing an answer |
 
 Each project has its own README with the architecture, the design decisions and
 the alternatives rejected, the exact commands to run it, and the measured

@@ -1,5 +1,7 @@
 # 05. Semantic Cache Layer
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/semantic-cache](https://applied-llm-systems.vercel.app/s/semantic-cache)** - the hosted page runs this code and shows the real output.
+
 An embedding cache that serves a stored answer for a similar-enough query, with a
 salience check that refuses the hit when a single token flips the meaning.
 

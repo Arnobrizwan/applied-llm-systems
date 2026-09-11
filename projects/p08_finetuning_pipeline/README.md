@@ -1,5 +1,7 @@
 # 08. Fine-Tuning Pipeline
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/finetuning-pipeline](https://applied-llm-systems.vercel.app/s/finetuning-pipeline)** - the hosted page runs this code and shows the real output.
+
 A LoRA adaptation pipeline with the maths written out by hand, benchmarked
 against a full fine-tune and a prompt-only baseline on a held-out test set.
 

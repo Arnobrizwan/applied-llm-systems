@@ -1,5 +1,7 @@
 # 15. Self-Correcting RAG Agent
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/self-correcting-rag](https://applied-llm-systems.vercel.app/s/self-correcting-rag)** - the hosted page runs this code and shows the real output.
+
 A bounded retrieve, critique, decide, act loop that rewrites its own query, widens
 its search, escalates to a tool outside its index, and abstains when none of that
 worked.

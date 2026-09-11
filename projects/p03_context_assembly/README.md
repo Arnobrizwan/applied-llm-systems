@@ -1,5 +1,7 @@
 # 03. Context Assembly Service
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/context-assembly](https://applied-llm-systems.vercel.app/s/context-assembly)** - the hosted page runs this code and shows the real output.
+
 A dynamic context builder that budgets a model window across memory, documents,
 tool output and chat history on every request, and emits a receipt explaining
 every token it spent.

@@ -1,5 +1,7 @@
 # 06. Model Routing Gateway
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/model-router](https://applied-llm-systems.vercel.app/s/model-router)** - the hosted page runs this code and shows the real output.
+
 Complexity-based routing across three model tiers, with per-tenant and per-endpoint policy, a budget guard that can refuse, a fallback chain that survives a tier outage, and quality-aware escalation.
 
 ## The problem

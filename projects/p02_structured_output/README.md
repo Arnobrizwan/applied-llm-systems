@@ -1,5 +1,7 @@
 # 02. Structured Output Engine
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/structured-output](https://applied-llm-systems.vercel.app/s/structured-output)** - the hosted page runs this code and shows the real output.
+
 Schema enforcement for model output: a hand-written JSON Schema validator, a
 repair pipeline for broken JSON, a retry loop that feeds validation errors back
 to the model, and a typed fallback so the caller never sees an exception.

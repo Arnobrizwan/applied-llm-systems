@@ -1,5 +1,7 @@
 # 12. Prompt Versioning and A/B System
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/prompt-registry](https://applied-llm-systems.vercel.app/s/prompt-registry)** - the hosted page runs this code and shows the real output.
+
 A registry for prompts and configs with content-addressed versions, environment
 labels, deterministic traffic splitting, per-arm outcome tracking, a statistical
 promotion gate and one-call rollback.

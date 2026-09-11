@@ -1,5 +1,7 @@
 # 04. LLM Evaluation Harness
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/eval-harness](https://applied-llm-systems.vercel.app/s/eval-harness)** - the hosted page runs this code and shows the real output.
+
 A golden dataset, deterministic scorers, an LLM judge with its bias controls, and a CI gate that blocks a merge on a quality regression it can actually defend.
 
 ## The problem

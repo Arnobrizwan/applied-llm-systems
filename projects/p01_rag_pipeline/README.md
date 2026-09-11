@@ -1,5 +1,7 @@
 # 01. Production RAG Pipeline
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/rag-pipeline](https://applied-llm-systems.vercel.app/s/rag-pipeline)** - the hosted page runs this code and shows the real output.
+
 Ingestion, chunking, hybrid retrieval, reranking and answer synthesis where every
 citation in the output is verified against the evidence that was actually sent to
 the model.

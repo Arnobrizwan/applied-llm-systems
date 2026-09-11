@@ -1,5 +1,7 @@
 # 14. Tool-Calling Framework
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/tool-calling](https://applied-llm-systems.vercel.app/s/tool-calling)** - the hosted page runs this code and shows the real output.
+
 Typed function schemas derived from type hints and docstrings, a versioned
 registry with discovery, argument coercion with structured errors, guarded
 execution with an audit trail, and a bounded agent loop.

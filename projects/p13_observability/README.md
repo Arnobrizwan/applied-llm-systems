@@ -1,5 +1,7 @@
 # 13. LLM Observability Stack
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/observability](https://applied-llm-systems.vercel.app/s/observability)** - the hosted page runs this code and shows the real output.
+
 Tracing for prompts, tokens, latency and cost per request, with metric aggregation, anomaly detection and alerting that does not page you four hundred times for one incident.
 
 ## The problem

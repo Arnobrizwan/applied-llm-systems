@@ -1,5 +1,7 @@
 # 09. Agent Memory System
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/agent-memory](https://applied-llm-systems.vercel.app/s/agent-memory)** - the hosted page runs this code and shows the real output.
+
 Working, episodic and semantic memory for a conversational agent, with
 compression on overflow, decay-based eviction under a hard token budget, and
 contradiction handling that keeps the superseded version.

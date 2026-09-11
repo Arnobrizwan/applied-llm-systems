@@ -1,5 +1,7 @@
 # 11. Streaming Response Infrastructure
 
+**Run it live: [https://applied-llm-systems.vercel.app/s/streaming](https://applied-llm-systems.vercel.app/s/streaming)** - the hosted page runs this code and shows the real output.
+
 Server-sent events with real backpressure, resume-from-offset reconnects,
 producer cancellation and measured time to first token.
 
