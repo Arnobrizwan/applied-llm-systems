@@ -33,3 +33,6 @@ jobs:
 
       - name: All 15 demos, end to end
         run: python scripts/run_all_demos.py
+
+      - name: Hosted demo adapters (the 15 live pages)
+        run: python scripts/check_adapters.py

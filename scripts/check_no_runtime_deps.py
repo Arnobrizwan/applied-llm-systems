@@ -14,7 +14,7 @@ import sys
 import sysconfig
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ALLOWED_EXTRA = {"pytest", "llmkit", "projects", "scripts", "conftest"}
+ALLOWED_EXTRA = {"pytest", "llmkit", "projects", "scripts", "web", "api", "web", "api", "conftest"}
 
 # Optional accelerators that may only ever be imported lazily, inside a guard,
 # and must have a working standard-library fallback. Anything here that is
@@ -83,7 +83,7 @@ def main() -> int:
     def allowed(mod: str) -> bool:
         return mod in ALLOWED_EXTRA or _is_stdlib(mod)
 
-    for base in ("llmkit", "projects", "scripts"):
+    for base in ("llmkit", "projects", "scripts", "web", "api"):
         for dirpath, dirnames, filenames in os.walk(os.path.join(ROOT, base)):
             dirnames[:] = [d for d in dirnames if d != "__pycache__"]
             in_tests = os.sep + "tests" in dirpath + os.sep
