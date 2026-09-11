@@ -50,7 +50,13 @@ class handler(BaseHTTPRequestHandler):
 
     def _route(self, method: str) -> None:
         parsed = urlparse(self.path)
-        path = parsed.path.rstrip("/") or "/"
+        query = parse_qs(parsed.query)
+        # Vercel rewrites every route to this function, and the function only
+        # ever sees the rewritten path (/api/index). vercel.json therefore
+        # carries the original path through in __path; locally there is no
+        # rewrite, so fall back to the real path.
+        path = (query.get("__path") or [parsed.path])[0]
+        path = path.split("?")[0].rstrip("/") or "/"
 
         if path in ("/", "/index.html"):
             systems = [registry.meta(m) for m in registry.all_systems()]
@@ -76,7 +82,7 @@ class handler(BaseHTTPRequestHandler):
                 raw = self.rfile.read(length).decode("utf-8", "replace") if length else ""
                 user_input = (parse_qs(raw).get("q") or [""])[0]
             else:
-                user_input = (parse_qs(parsed.query).get("q") or [""])[0]
+                user_input = (query.get("q") or [""])[0]
 
             user_input = user_input[:MAX_INPUT]
             if method == "POST" or user_input:
